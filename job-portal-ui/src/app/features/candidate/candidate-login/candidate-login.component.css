@@ -1,0 +1,44 @@
+.login-container {
+  max-width: 360px;
+  margin: 80px auto;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #aaa;
+}
+
+.error {
+  color: red;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.register-link {
+  margin-top: 12px;
+  text-align: center;
+}

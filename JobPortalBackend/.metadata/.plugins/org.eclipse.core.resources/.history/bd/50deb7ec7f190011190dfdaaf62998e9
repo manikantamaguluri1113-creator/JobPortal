@@ -1,0 +1,25 @@
+package com.jobportal.job.repository;
+
+import com.jobportal.job.entity.Job;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface JobRepository extends JpaRepository<Job, Long> {
+
+    // fetch all active jobs
+    List<Job> findByActiveTrue();
+
+    // fetch jobs created by a recruiter
+    List<Job> findByRecruiterId(Long recruiterId);
+    
+    //fetch both active and inactive jobs
+    List<Job> findAll();
+    
+    long countByRecruiterId(Long recruiterId);
+
+    long countByRecruiterIdAndActiveTrue(Long recruiterId);
+
+    long countByRecruiterIdAndActiveFalse(Long recruiterId);
+
+}

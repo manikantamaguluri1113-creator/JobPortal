@@ -1,0 +1,43 @@
+//package com.jobportal.job.dto;
+//
+//public class AdminApplicantDTO {
+//
+//}
+
+
+package com.jobportal.job.dto;
+
+import com.jobportal.job.entity.JobApplication;
+import java.time.LocalDateTime;
+
+public class AdminApplicantDTO {
+
+    private Long applicationId;
+    private Long candidateId;
+    private String fullName;       // from user-service
+    private String email;          // from user-service
+    private String jobTitle;       // from job object inside JobApplication
+    private LocalDateTime appliedAt;
+    private String status;
+
+    // Build directly from your existing JobApplication entity + user details
+    public static AdminApplicantDTO from(JobApplication app, String fullName, String email) {
+        AdminApplicantDTO dto = new AdminApplicantDTO();
+        dto.applicationId = app.getId();
+        dto.candidateId   = app.getCandidateId();
+        dto.fullName      = fullName;
+        dto.email         = email;
+        dto.jobTitle      = app.getJob().getTitle();
+        dto.appliedAt     = app.getAppliedAt();
+        dto.status        = app.getStatus();
+        return dto;
+    }
+
+    public Long getApplicationId() { return applicationId; }
+    public Long getCandidateId() { return candidateId; }
+    public String getFullName() { return fullName; }
+    public String getEmail() { return email; }
+    public String getJobTitle() { return jobTitle; }
+    public LocalDateTime getAppliedAt() { return appliedAt; }
+    public String getStatus() { return status; }
+}

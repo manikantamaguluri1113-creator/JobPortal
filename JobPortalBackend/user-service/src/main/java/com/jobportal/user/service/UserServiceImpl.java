@@ -1,0 +1,181 @@
+package com.jobportal.user.service;
+
+import com.jobportal.user.dto.UpdateUserRequest;
+import com.jobportal.user.entity.Role;
+import com.jobportal.user.entity.User;
+import com.jobportal.user.repository.UserRepository;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    
+    
+    @Override
+    public User createFirstAdmin(User user) {
+
+        if (userRepository.existsByRole(Role.ADMIN)) {
+            throw new RuntimeException("Admin already exists");
+        }
+
+        user.setRole(Role.ADMIN);
+        user.setActive(true);
+        user.setCreatedBy("SYSTEM"); // only place SYSTEM is allowed
+        user.setCreatedAt(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+        return userRepository.save(user);
+    }
+
+
+
+    
+    @Override
+    public User createUser(User newUser, String loggedInUserEmail) {
+
+        User loggedInUser = findByEmail(loggedInUserEmail);
+
+        Role creatorRole = loggedInUser.getRole();
+        Role targetRole = newUser.getRole();
+
+        if (creatorRole == Role.HR && targetRole != Role.CANDIDATE) {
+            throw new RuntimeException("HR can only create CANDIDATE users");
+        }
+
+        if (creatorRole == Role.CANDIDATE) {
+            throw new RuntimeException("Candidates cannot create users");
+        }
+
+        newUser.setCreatedBy(loggedInUser.getEmail());
+        newUser.setActive(true);
+        newUser.setCreatedAt(LocalDateTime.now());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+
+        return userRepository.save(newUser);
+    }
+    
+    @Override
+    public User registerCandidate(String fullName, String email, String password) {
+
+        if (userRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        User user = new User();
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole(Role.CANDIDATE);
+        user.setActive(true);
+        user.setCreatedBy(email);
+        return userRepository.save(user);
+    }
+
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    
+    @Override
+    public User updateUser(Long id, UpdateUserRequest request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getName() != null) {
+            user.setFullName(request.getName());
+        }
+
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+
+        if (request.getRole() != null) {
+            user.setRole(request.getRole());
+        }
+
+        if (request.getActive() != null) {
+            user.setActive(request.getActive());
+        }
+
+        return userRepository.save(user);
+    }
+    
+    @Override
+    public void deleteUser(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        userRepository.delete(user);
+    }
+    
+    @Override
+    public List<User> searchUsers(String query){
+    	if(query == null || query.isBlank()){
+            return userRepository.findAll();
+        }
+
+        return userRepository.searchUsers(query);
+    }
+    
+
+    // -------------------------------------------------
+    // 4️⃣ CHECK ADMIN EXISTENCE
+    // -------------------------------------------------
+    @Override
+    public boolean isFirstAdminExists() {
+        return userRepository.count() > 0;
+    }
+
+    // -------------------------------------------------
+    // 🔧 PRIVATE HELPERS
+    // -------------------------------------------------
+    private void prepareUser(User user) {
+        user.setActive(true);
+        user.setCreatedAt(LocalDateTime.now());
+    }
+
+    private void validateRoleForAdmin(Role role) {
+        if (role == null) {
+            throw new RuntimeException("Role is mandatory");
+        }
+    }
+
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		List<User> users = userRepository.findAll();
+		return users;
+	}
+
+
+	@Override
+	public void updateUserStatus(Long userId, boolean enabled) {
+		// TODO Auto-generated method stub
+		 User user = userRepository.findById(userId)
+		            .orElseThrow(() -> new RuntimeException("User not found"));
+
+		    user.setActive(enabled);
+		    userRepository.save(user);
+	}
+}

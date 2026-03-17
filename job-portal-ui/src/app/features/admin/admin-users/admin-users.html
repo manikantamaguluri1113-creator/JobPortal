@@ -1,0 +1,69 @@
+<app-admin-update-user
+      *ngIf="showUpdateDialog"
+      [user]="selectedUser"
+      (closed)="closeUpdateDialog($event)">
+    </app-admin-update-user>
+<div class="users-container">
+
+  <h2>Users Management</h2>
+  <div class="search-container">
+
+    <input
+    type="text"
+    placeholder="Search users..."
+    [(ngModel)]="searchQuery"
+    (input)="searchUsers()"> &nbsp;
+    <button (click)="resetSearch()">Reset</button>
+    </div>
+  <table class="users-table">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Created By</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let user of users">
+
+        <td>{{user.id}}</td>
+        <td>{{user.fullName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
+
+        <td>
+          <span
+            [class.active]="user.active"
+            [class.inactive]="!user.active">
+            {{user.active ? 'Active' : 'Inactive'}}
+          </span>
+        </td>
+
+        <td>{{user.createdBy}}</td>
+
+        <td>
+
+        <button (click)="openUpdateDialog(user)">
+        Update
+        </button>
+        &nbsp;
+        <button *ngIf="user.email!=loggedInEmail" (click)="deleteUser(user.id)">
+        Delete
+        </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+    
+</div>

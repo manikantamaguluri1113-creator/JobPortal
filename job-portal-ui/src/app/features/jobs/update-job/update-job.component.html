@@ -1,0 +1,46 @@
+<div class="modal-backdrop" *ngIf="visible"></div>
+
+<div class="modal" *ngIf="visible">
+  <div class="modal-header">
+    <h3>Update Job</h3>
+    <button (click)="close()">✕</button>
+  </div>
+<!-- <form #updateForm="ngForm" (ngSubmit)="save()"> -->
+
+  <div class="modal-body">
+    <input type="text" placeholder="Title" [(ngModel)]="job.title" />
+    <textarea placeholder="Description" [(ngModel)]="job.description"></textarea>
+    <input type="text" placeholder="Location" [(ngModel)]="job.location" />
+
+    <select [(ngModel)]="job.employmentType">
+      <option value="FULL_TIME">Full Time</option>
+      <option value="PART_TIME">Part Time</option>
+      <option value="CONTRACT">Contract</option>
+    </select>
+
+    <select [(ngModel)]="job.experienceLevel">
+      <option value="FRESHER">Fresher</option>
+      <option value="MID">Mid</option>
+      <option value="SENIOR">Senior</option>
+    </select>
+
+    <input type="number" placeholder="Min Salary" [(ngModel)]="job.minSalary" />
+    <input type="number" placeholder="Max Salary" [(ngModel)]="job.maxSalary" />
+
+    <!-- ACTIVE TOGGLE -->
+    <label class="toggle">
+      <input type="checkbox" [(ngModel)]="job.active" />
+      Active Job
+    </label>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      class="primary"
+      [disabled]="!isFormValid()"
+      (click)="save()">
+      Update Job
+    </button>
+  </div>
+<!-- </form> -->
+</div>

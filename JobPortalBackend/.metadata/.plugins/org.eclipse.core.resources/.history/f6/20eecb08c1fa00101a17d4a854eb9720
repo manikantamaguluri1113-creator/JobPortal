@@ -1,0 +1,5 @@
+package co.jobportal.user.security;
+
+public class JwtUtil {
+
+}

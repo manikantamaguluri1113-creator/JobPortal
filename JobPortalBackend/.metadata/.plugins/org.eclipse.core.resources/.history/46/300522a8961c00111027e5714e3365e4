@@ -1,0 +1,5 @@
+package com.jobportal.job.dto;
+
+public class AdminApplicantDTO {
+
+}

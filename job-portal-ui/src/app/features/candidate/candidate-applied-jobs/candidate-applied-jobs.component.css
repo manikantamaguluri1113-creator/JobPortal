@@ -1,0 +1,32 @@
+.job-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.job-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.withdraw-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.withdraw-btn:hover {
+  background-color: #b02a37;
+}
+
+.withdraw-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+

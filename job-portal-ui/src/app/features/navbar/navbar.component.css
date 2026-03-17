@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #1f2937;
+  color: white;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.link {
+  background: none;
+  border: none;
+  color: white;
+  margin-right: 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.logout {
+  background-color: #ef4444;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.user-info {
+  padding-right: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}

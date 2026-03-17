@@ -1,0 +1,14 @@
+package com.jobportal.job.service;
+
+import com.jobportal.job.entity.JobApplication;
+
+import java.util.List;
+
+public interface JobApplicationService {
+
+    JobApplication applyToJob(Long jobId, Long candidateId);
+
+    List<JobApplication> getApplicationsByCandidate(Long candidateId);
+
+    List<JobApplication> getApplicationsByJob(Long jobId);
+}

@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+<br>
+<!-- <div class="content">
+  <h2>Admin Dashboard</h2>
+  <p>Admin component loaded successfully.</p>
+</div> -->
+
+<!-- <h2>Admin Dashboard</h2> -->
+
+<nav class="tabs">
+  <a routerLink="overview" routerLinkActive="active">Overview</a>
+  <a routerLink="jobs" routerLinkActive="active">Jobs</a>
+  <a routerLink="users" routerLinkActive="active">Users</a>
+  <a routerLink="/admin/all-applicants" routerLinkActive="active">All Applicants</a>
+  
+
+  <!-- <a routerLink="applications" routerLinkActive="active">Applications</a>
+  <a routerLink="analytics" routerLinkActive="active">Analytics</a> -->
+</nav>
+
+<div class="tab-content">
+  <router-outlet></router-outlet>
+</div>

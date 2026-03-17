@@ -1,0 +1,76 @@
+<!-- <app-navbar></app-navbar>
+<h2>Applications for Job {{jobId}}</h2>
+<p>Total Applications: {{applications.length}}</p>
+<button (click)="goBack()" class="back-btn">
+  ← Back to Jobs
+</button>
+<table class="applications-table">
+
+<thead>
+
+<tr>
+<th>Application ID</th>
+<th>Candidate ID</th>
+<th>Status</th>
+<th>Applied At</th>
+</tr>
+
+</thead>
+
+<tbody>
+<tr *ngFor="let app of applications; trackBy: trackById">
+
+<td>{{app?.id}}</td>
+<td>{{app?.candidateId}}</td>
+<td>{{app?.status}}</td>
+<td>{{app?.appliedAt | date:'medium'}}</td>
+
+</tr>
+
+</tbody>
+
+</table> -->
+
+
+<app-navbar></app-navbar>
+
+<div class="applications-header">
+
+  <h2>Applications for JobId {{jobId}}</h2>
+
+  <p class="total-count">
+    Total Applications: {{applications.length}}
+  </p>
+
+  <button (click)="goBack()" class="back-btn">
+    ← Back to Jobs
+  </button>
+
+</div>
+
+
+<table class="applications-table">
+
+<thead>
+<tr>
+<th>Application ID</th>
+<th>Candidate ID</th>
+<th>Status</th>
+<th>Applied At</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr *ngFor="let app of applications; trackBy: trackById">
+
+<td>{{app?.id}}</td>
+<td>{{app?.candidateId}}</td>
+<td>{{app?.status}}</td>
+<td>{{app?.appliedAt | date:'medium'}}</td>
+
+</tr>
+
+</tbody>
+
+</table>

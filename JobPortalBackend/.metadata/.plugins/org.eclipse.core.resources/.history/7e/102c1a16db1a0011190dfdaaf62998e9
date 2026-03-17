@@ -1,0 +1,29 @@
+package com.jobportal.user.service;
+
+import java.util.List;
+
+import com.jobportal.user.dto.UpdateUserRequest;
+import com.jobportal.user.entity.User;
+
+public interface UserService {
+
+    User createFirstAdmin(User user);
+
+    User createUser(User newUser, String loggedInUserEmail);
+
+    boolean isFirstAdminExists();
+    
+    User findByEmail(String email);
+ 
+    List<User> getAllUsers();
+
+    void updateUserStatus(Long userId, boolean enabled);
+    
+    User registerCandidate(String fullName, String email, String password);
+    
+    User updateUser(Long id, UpdateUserRequest request);
+
+    void deleteUser(Long id);
+
+
+}

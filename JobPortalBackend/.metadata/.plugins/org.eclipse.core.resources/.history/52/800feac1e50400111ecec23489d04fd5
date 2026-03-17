@@ -1,0 +1,35 @@
+package com.jobportal.job.service;
+
+import com.jobportal.job.entity.Job;
+import com.jobportal.job.repository.JobRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class JobService {
+
+    private final JobRepository jobRepository;
+    
+    public JobService(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
+
+    // Create Job (Recruiter only)
+    public Job createJob(Job job, Long recruiterId) {
+        job.setRecruiterId(recruiterId);
+        return jobRepository.save(job);
+    }
+
+    // Get all active jobs (Public)
+    public List<Job> getAllActiveJobs() {
+        return jobRepository.findByActiveTrue();
+    }
+
+    // Get jobs posted by a recruiter
+    public List<Job> getJobsByRecruiter(Long recruiterId) {
+        return jobRepository.findByRecruiterId(recruiterId);
+    }
+}

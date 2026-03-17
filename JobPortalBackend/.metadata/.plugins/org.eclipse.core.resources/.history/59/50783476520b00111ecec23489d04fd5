@@ -1,0 +1,66 @@
+package com.jobportal.job.service;
+
+import com.jobportal.job.entity.Job;
+import com.jobportal.job.entity.JobApplication;
+import com.jobportal.job.repository.JobApplicationRepository;
+import com.jobportal.job.repository.JobRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class JobApplicationServiceImpl implements JobApplicationService {
+
+    private final JobApplicationRepository jobApplicationRepository;
+    private final JobRepository jobRepository;
+
+    
+    public JobApplicationServiceImpl(
+            JobApplicationRepository jobApplicationRepository,
+            JobRepository jobRepository) {
+        this.jobApplicationRepository = jobApplicationRepository;
+        this.jobRepository = jobRepository;
+    }
+    
+    @Override
+    public JobApplication applyToJob(Long jobId, Long candidateId) {
+    	System.out.println("Applying for jobId = " + jobId);
+    	System.out.println("All jobs in DB = " + jobRepository.findAll());
+
+        // 1️⃣ Check if job exists
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        // 2️⃣ Check if job is active
+        if (!job.isActive()) {
+            throw new RuntimeException("Cannot apply. Job is inactive.");
+        }
+
+        // 3️⃣ Prevent duplicate apply
+        jobApplicationRepository
+                .findByJobIdAndCandidateId(jobId, candidateId)
+                .ifPresent(app -> {
+                    throw new RuntimeException("You already applied for this job.");
+                });
+
+        // 4️⃣ Create application
+        JobApplication application = new JobApplication();
+        application.setJobId(jobId);
+        application.setCandidateId(candidateId);
+        application.setStatus("APPLIED");
+
+        return jobApplicationRepository.save(application);
+    }
+
+    @Override
+    public List<JobApplication> getApplicationsByCandidate(Long candidateId) {
+        return jobApplicationRepository.findByCandidateId(candidateId);
+    }
+
+    @Override
+    public List<JobApplication> getApplicationsByJob(Long jobId) {
+        return jobApplicationRepository.findByJobId(jobId);
+    }
+}

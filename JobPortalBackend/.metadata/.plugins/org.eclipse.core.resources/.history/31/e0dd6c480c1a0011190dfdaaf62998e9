@@ -1,0 +1,101 @@
+package com.jobportal.user.config;
+
+import com.jobportal.user.security.JwtAuthenticationFilter;
+
+import com.jobportal.user.service.CustomUserDetailsService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.jobportal.user.security.DebugSecurityFilter;
+
+
+@Configuration
+@EnableMethodSecurity
+public class SecurityBeansConfig {
+
+    private final CustomUserDetailsService customUserDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final DebugSecurityFilter debugSecurityFilter;
+    public SecurityBeansConfig(
+            CustomUserDetailsService customUserDetailsService,
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            DebugSecurityFilter debugSecurityFilter
+    ) {
+    	this.customUserDetailsService = customUserDetailsService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.debugSecurityFilter = debugSecurityFilter;
+    }
+    
+
+
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .authorizeHttpRequests(auth -> auth
+
+                // PUBLIC
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/api/users/bootstrap/admin",
+                    "/actuator/**"
+                ).permitAll()
+
+                // ADMIN ONLY
+                .requestMatchers("/api/users/admin/**")
+                .hasRole("ADMIN")
+             // CREATE USER
+                .requestMatchers("/api/users")
+                .hasAnyRole("ADMIN", "HR")
+                // ADMIN + HR
+                .requestMatchers("/api/users/hr/**")
+                .hasAnyRole("ADMIN", "HR")
+
+                // ALL LOGGED-IN USERS
+                .requestMatchers("/api/users/profile")
+                .hasAnyRole("ADMIN", "HR", "CANDIDATE")
+
+                // EVERYTHING ELSE
+                .anyRequest().authenticated()
+            )
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(debugSecurityFilter, JwtAuthenticationFilter.class);
+
+        return http.build();
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+}

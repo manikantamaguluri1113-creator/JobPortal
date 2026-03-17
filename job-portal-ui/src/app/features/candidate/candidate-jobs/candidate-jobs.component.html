@@ -1,0 +1,84 @@
+<app-navbar></app-navbar>
+<div class="candidate-jobs-container">
+
+  <h2>Available Jobs</h2>
+
+  <!-- Loading state -->
+  <p *ngIf="loading" class="info-text">
+    Loading jobs...
+  </p>
+
+  <!-- Error state -->
+  <p *ngIf="error" class="error-text">
+    Failed to load jobs. Please try again later.
+  </p>
+
+  <!-- Jobs grid -->
+  <div class="jobs-grid" *ngIf="!loading && !error && jobs.length">
+
+    <div class="job-card" *ngFor="let job of jobs">
+      <h3 class="job-title">{{ job.title }}</h3>
+
+      <p class="job-location">{{ job.location }}</p>
+
+      <p class="job-description">
+        {{ job.description }}
+      </p>
+
+      <div class="job-meta">
+        <span>{{ job.employmentType }}</span>
+        <span>{{ job.experienceLevel }}</span>
+      </div>
+
+      <div class="job-salary" *ngIf="job.minSalary || job.maxSalary">
+        ₹{{ job.minSalary || 0 }} – ₹{{ job.maxSalary || 'N/A' }}
+      </div>
+
+      <!-- Apply placeholder (disabled) -->
+      <!-- <button class="apply-btn" disabled>
+        Apply (Coming Soon)
+      </button> -->
+      <button
+    *ngIf="!isApplied(job.id)"
+    (click)="apply(job.id)"
+    class="apply-btn">
+    Apply
+  </button>
+
+  <button
+    *ngIf="isApplied(job.id)"
+    class="applied-btn"
+    disabled>
+    Applied
+  </button>
+      <!-- <div *ngIf="successMessage" class="success-msg">
+  {{ successMessage }}
+</div> -->
+
+<!-- <div class="job-card" *ngFor="let job of jobs">
+
+  <h3>{{ job.title }}</h3>
+  <p>{{ job.description }}</p>
+  <p><strong>Location:</strong> {{ job.location }}</p>
+
+  <button
+    *ngIf="!isApplied(job.id)"
+    (click)="apply(job.id)"
+    class="apply-btn">
+    Apply
+  </button>
+
+  <button
+    *ngIf="isApplied(job.id)"
+    class="applied-btn"
+    disabled>
+    Applied
+  </button>
+
+</div> -->
+
+    </div>
+
+  </div>
+
+</div>

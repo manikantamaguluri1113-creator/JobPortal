@@ -1,0 +1,24 @@
+package com.jobportal.job.service;
+
+import com.jobportal.job.entity.JobApplication;
+
+import java.util.List;
+
+public interface JobApplicationService {
+
+    JobApplication applyToJob(Long jobId, Long candidateId, String email);
+
+    List<JobApplication> getApplicationsByCandidate(Long candidateId);
+
+    List<JobApplication> getApplicationsByJob(Long jobId);
+    
+    JobApplication withdraw(Long candidateId, Long jobId);
+    
+    List<JobApplication> getApplicationsForRecruiter(Long recruiterId);
+    
+    List<JobApplication> getAllApplications();
+    
+    JobApplication updateStatus(Long id, String status);
+
+
+}

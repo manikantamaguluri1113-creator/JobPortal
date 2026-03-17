@@ -1,0 +1,64 @@
+<app-navbar></app-navbar>
+<app-create-job
+  [visible]="showCreateJobModal"
+  (closed)="closeCreateJob()">
+</app-create-job>
+<app-update-job
+  [visible]="showUpdateModal"
+  [job]="selectedJob!"
+  (closed)="closeUpdate($event)">
+</app-update-job>
+<app-admin-create-user
+  *ngIf="showCreateUserDialog"
+  (closed)="closeCreateUserDialog($event)">
+</app-admin-create-user>
+<div class="content">
+  
+
+<div class="admin-actions">
+
+  <button class="action-btn" (click)="openCreateJob()">
+    Create Job
+  </button>
+
+  <button *ngIf="authService.isAdmin()" class="action-btn secondary" (click)="openCreateUser()">
+    Create User
+  </button>
+
+</div>
+  <h2>Available Jobs</h2>
+ 
+  <p *ngIf="jobs.length == 0" class="info">Loading jobs...</p>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <div class="jobs-grid" *ngIf="!loading && jobs.length">
+    <div class="job-card" *ngFor="let job of jobs">
+      <h3 class="title">Title: {{ job.title }}</h3>
+
+      <p class="location">
+        Location: {{ job.location }}
+      </p>
+
+      <div class="tags">
+        <span class="tag">Employment Type: {{ job.employmentType }}</span>
+        <span class="tag">Experience Level: {{ job.experienceLevel }}</span>
+      </div>
+
+      <p class="salary">
+        Salary Range: {{ job.minSalary }} – {{ job.maxSalary }}
+      </p>
+
+      <p class="status" [class.inactive]="!job.active">
+        Status: {{ job.active ? 'Active' : 'Inactive' }}
+      </p>
+      <button  [disabled]="!canEdit(job)" (click)="openUpdate(job)">
+  Update
+</button>
+    </div>
+    
+  </div>
+
+  <p *ngIf="!loading && !jobs.length" class="info">
+    No jobs available
+  </p>
+</div>

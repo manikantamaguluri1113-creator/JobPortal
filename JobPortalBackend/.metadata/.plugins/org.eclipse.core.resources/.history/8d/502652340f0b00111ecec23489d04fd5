@@ -1,0 +1,5 @@
+package com.jobportal.job.controller;
+
+public class JobApplicationController {
+
+}

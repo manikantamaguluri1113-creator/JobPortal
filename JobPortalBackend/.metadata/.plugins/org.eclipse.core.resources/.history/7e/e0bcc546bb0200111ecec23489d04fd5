@@ -1,0 +1,5 @@
+package com.jobportal.gateway.security;
+
+public class JwtValidationFilter {
+
+}

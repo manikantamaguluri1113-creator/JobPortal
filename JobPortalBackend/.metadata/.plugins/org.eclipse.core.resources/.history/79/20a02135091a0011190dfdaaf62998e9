@@ -1,0 +1,117 @@
+package com.jobportal.user.controller;
+
+import com.jobportal.user.dto.UserRequestDto;
+import com.jobportal.user.entity.User;
+import com.jobportal.user.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+	
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // ----------------------------------------------------
+    // 1️⃣ BOOTSTRAP: CREATE FIRST SUPER ADMIN (ONE TIME)
+    // ----------------------------------------------------
+    @PostMapping("/bootstrap/admin")
+    public ResponseEntity<User> createFirstAdmin(
+            @RequestBody UserRequestDto request) {
+
+        User user = new User();
+        user.setFullName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
+        User savedAdmin = userService.createFirstAdmin(user);
+        return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
+    }
+
+    // ----------------------------------------------------
+    // 2️⃣ CREATE USER (SUPER_ADMIN or HR)
+    // ----------------------------------------------------
+   // @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create")
+    public ResponseEntity<User> createUser(
+            @RequestBody UserRequestDto request,
+            Authentication authentication) {
+    	System.out.println("DTO fullName = " + request.getName());
+        String loggedInEmail = authentication.getName();
+        System.out.println("fullname :" + request.getName());
+        User newUser = new User();
+        newUser.setFullName(request.getName());
+        newUser.setEmail(request.getEmail());
+        newUser.setPassword(request.getPassword());
+        newUser.setRole(request.getRole());
+
+        User savedUser = userService.createUser(newUser, loggedInEmail);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+   
+    // 3️ GET LOGGED-IN USER PROFILE
+  
+    @GetMapping("/me")
+    public ResponseEntity<User> getMyProfile(Authentication authentication) {
+        String email = authentication.getName();
+        return ResponseEntity.ok(userService.findByEmail(email));
+    }
+
+    // ----------------------------------------------------
+    // 4️⃣ SUPER_ADMIN: GET ALL USERS
+    // ----------------------------------------------------
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    // ----------------------------------------------------
+    // 5️⃣ SUPER_ADMIN: ENABLE / DISABLE USER
+    // ----------------------------------------------------
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/status")
+    public ResponseEntity<String> updateUserStatus(
+            @PathVariable Long id,
+            @RequestParam boolean enabled) {
+
+        userService.updateUserStatus(id, enabled);
+        return ResponseEntity.ok("User status updated successfully");
+    }
+    
+    @PreAuthorize("hasAnyRole('ADMIN','HR','CANDIDATE')")
+    @GetMapping("/profile")
+    public ResponseEntity<String> profile() {
+        return ResponseEntity.ok("Profile accessed");
+    }
+
+
+    @GetMapping("/admin/test")
+    public ResponseEntity<String> adminTest() {
+        return ResponseEntity.ok("Admin API accessed");
+    }
+
+    @GetMapping("/hr/test")
+    public ResponseEntity<String> hrTest() {
+        return ResponseEntity.ok("HR API accessed");
+    }
+    
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @GetMapping("/candidate/test")
+    public ResponseEntity<String> candidateTest() {
+        return ResponseEntity.ok("Candidate API accessed");
+    }
+
+
+}

@@ -1,0 +1,5 @@
+package com.jobportal.job.repository;
+
+public class JobApplicationRepository {
+
+}

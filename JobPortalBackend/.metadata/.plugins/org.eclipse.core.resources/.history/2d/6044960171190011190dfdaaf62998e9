@@ -1,0 +1,33 @@
+package com.jobportal.job.dto;
+
+public class AdminOverviewResponse {
+
+    private long totalJobs;
+    private long activeJobs;
+    private long inactiveJobs;
+    private long totalApplications;
+
+    public AdminOverviewResponse(long totalJobs, long activeJobs,
+                                 long inactiveJobs, long totalApplications) {
+        this.totalJobs = totalJobs;
+        this.activeJobs = activeJobs;
+        this.inactiveJobs = inactiveJobs;
+        this.totalApplications = totalApplications;
+    }
+
+    public long getTotalJobs() {
+        return totalJobs;
+    }
+
+    public long getActiveJobs() {
+        return activeJobs;
+    }
+
+    public long getInactiveJobs() {
+        return inactiveJobs;
+    }
+
+    public long getTotalApplications() {
+        return totalApplications;
+    }
+}

@@ -1,0 +1,93 @@
+<!-- <h2>All Applicants</h2>
+
+<table class="applications-table">
+
+<thead>
+<tr>
+<th>Application ID</th>
+<th>Job ID</th>
+<th>Candidate ID</th>
+<th>Status</th>
+<th>Applied At</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr *ngFor="let app of applicants">
+
+<td>{{app.id}}</td>
+<td>{{app.job.id}}</td>
+<td>{{app.candidateId}}</td>
+<td>{{app.status}}</td>
+<td>{{app.appliedAt | date:'medium'}}</td>
+
+<td>
+
+<select (change)="changeStatus(app.id, $event)">
+
+<option value="">Change Status</option>
+
+<option value="APPLIED">APPLIED</option>
+<option value="SHORTLISTED">SHORTLISTED</option>
+<option value="REJECTED">REJECTED</option>
+<option value="INTERVIEW_SCHEDULED">INTERVIEW SCHEDULED</option>
+<option value="HIRED">HIRED</option>
+
+</select>
+
+</td>
+</tr>
+
+</tbody>
+
+</table> -->
+
+
+<h2>All Applicants</h2>
+
+<table class="applications-table">
+
+<thead>
+<tr>
+<th>Application ID</th>
+<th>Job ID</th>
+<th>Candidate Email</th>
+<th>Candidate ID</th>
+<th>Status</th>
+<th>Applied At</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr *ngFor="let app of applicants">
+
+<td>{{app.id}}</td>
+<td>{{app.job.id}}</td>
+<td>{{app.candidateEmail}}</td>
+<td>{{app.candidateId}}</td>
+<td>{{app.status}}</td>
+<td>{{app.appliedAt | date:'medium'}}</td>
+
+<td>
+<select (change)="changeStatus(app.id, $event)">
+
+<option value="">Change Status</option>
+
+<option value="APPLIED">APPLIED</option>
+<option value="SHORTLISTED">SHORTLISTED</option>
+<option value="REJECTED">REJECTED</option>
+<option value="INTERVIEW_SCHEDULED">INTERVIEW SCHEDULED</option>
+<option value="HIRED">HIRED</option>
+
+</select>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>

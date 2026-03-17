@@ -1,0 +1,63 @@
+<!-- BACKDROP -->
+<div class="backdrop" *ngIf="visible" (click)="cancel()"></div>
+
+<!-- MODAL -->
+<div class="modal" *ngIf="visible">
+  <div class="modal-header">
+  <h2>Create Job</h2>
+  <button class="close-btn" (click)="cancel()">×</button>
+  </div>
+  <form #jobForm="ngForm" (ngSubmit)="submit()">
+
+    <input name="title" [(ngModel)]="job.title" required placeholder="Title" />
+
+    <textarea name="description"
+              [(ngModel)]="job.description"
+              required
+              placeholder="Skils Required"></textarea>
+
+    <input name="location"
+           [(ngModel)]="job.location"
+           required
+           placeholder="Location" />
+
+    <select name="employmentType"
+            [(ngModel)]="job.employmentType"
+            required>
+      <option value="" disabled>Select Employment Type</option>
+      <option value="FULL_TIME">Full Time</option>
+      <option value="PART_TIME">Part Time</option>
+      <option value="CONTRACT">Contract</option>
+    </select>
+
+    <select name="experienceLevel"
+            [(ngModel)]="job.experienceLevel"
+            required>
+      <option value="" disabled>Select Experience</option>
+      <option value="FRESHER">Fresher</option>
+      <option value="MID">Mid</option>
+      <option value="SENIOR">Senior</option>
+    </select>
+
+    <input type="number"
+           name="minSalary"
+           [(ngModel)]="job.minSalary"
+           required
+           min="0"
+           placeholder="Min Salary" />
+
+    <input type="number"
+           name="maxSalary"
+           [(ngModel)]="job.maxSalary"
+           required
+           min="0"
+           placeholder="Max Salary" />
+
+    <div class="actions">
+      <!-- ✅ DISABLED IF ANY FIELD EMPTY -->
+      <button type="submit" [disabled]="jobForm.invalid">Create</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+
+  </form>
+</div>

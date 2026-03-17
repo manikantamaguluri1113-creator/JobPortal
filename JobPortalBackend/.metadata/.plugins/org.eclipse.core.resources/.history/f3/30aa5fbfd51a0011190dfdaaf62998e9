@@ -1,0 +1,5 @@
+package com.jobportal.user.dto;
+
+public class UpdateUserRequestDto {
+
+}

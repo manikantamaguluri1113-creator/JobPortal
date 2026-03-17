@@ -1,0 +1,36 @@
+package com.jobportal.job.repository;
+
+import com.jobportal.job.entity.JobApplication;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
+
+    // Check if candidate already applied to job
+    Optional<JobApplication> findByJobIdAndCandidateId(Long jobId, Long candidateId);
+
+    // Get all applications of a candidate
+   // List<JobApplication> findByCandidateId(Long candidateId);
+
+    // Get all applications for a job (HR/Admin use)
+    List<JobApplication> findByJobId(Long jobId);
+    
+    @Query("SELECT ja FROM JobApplication ja JOIN FETCH ja.job WHERE ja.candidateId = :candidateId")
+    List<JobApplication> findByCandidateId(@Param("candidateId") Long candidateId);
+    
+    @Query("SELECT ja FROM JobApplication ja WHERE ja.job.recruiterId = :recruiterId")
+    		List<JobApplication> findByRecruiterId(Long recruiterId);
+    
+    long countByJobRecruiterId(Long recruiterId);
+
+    long countByJobRecruiterIdAndStatus(Long recruiterId, String status);
+    
+    List<JobApplication> findAll();
+
+
+
+}

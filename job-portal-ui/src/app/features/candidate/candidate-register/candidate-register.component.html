@@ -1,0 +1,90 @@
+<!-- <div class="register-container">
+  <h2>Candidate Registration</h2>
+
+  <form (ngSubmit)="register()">
+    <input
+      type="text"
+      placeholder="Full Name"
+      [(ngModel)]="fullName"
+      name="fullName"
+      required
+    />
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="Password"
+      [(ngModel)]="password"
+      name="password"
+      required
+    />
+
+    <button type="submit" [disabled]="isFormInvalid() || loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <p class="login-link">
+    Already have an account?
+    <a routerLink="/candidate/login">Login</a>
+  </p>
+</div> -->
+
+
+<div class="register-container">
+  <h2>Candidate Registration</h2>
+
+  <!-- SUCCESS -->
+  <p class="success" *ngIf="success">
+    ✅ Registered successfully! Redirecting to login...
+  </p>
+
+  <!-- FORM -->
+  <form *ngIf="!success" (ngSubmit)="register()">
+    <input
+      type="text"
+      placeholder="Full Name"
+      [(ngModel)]="fullName"
+      name="fullName"
+      required
+    />
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="Password"
+      [(ngModel)]="password"
+      name="password"
+      required
+    />
+
+    <button type="submit" [disabled]="isFormInvalid() || loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  <!-- ERROR -->
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <p class="login-link" *ngIf="!success">
+    Already have an account?
+    <a routerLink="/candidate/login">Login</a>
+  </p>
+</div>
+

@@ -1,0 +1,37 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=jobportal;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: Strong@123
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+endpoint:
+  health:
+    show-details: always
+jwt:
+  secret: 8bH3pZQeKf6sR9T2yW4A7XcD1LJmP0VZQeR5N8S6K
+  expiration: 604800000   # 7 days in milliseconds

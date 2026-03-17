@@ -1,0 +1,44 @@
+<div class="hr-applications-container">
+
+  <h2>Applications</h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading applications...
+  </div>
+
+  <table *ngIf="!loading && applications.length > 0" class="applications-table">
+    <thead>
+      <tr>
+        <th>Application Id</th>
+        <th>Job Title</th>
+        <th>Candidate Id</th>
+        <th>Candidate Email</th>
+        <th>Status</th>
+        <th>Applied Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of applications">
+        <td>{{ app.id }}</td>
+        <td>{{ app.job.title }}</td>
+        <td>{{ app.candidateId }}</td>
+        <td>{{ app.candidateEmail }}</td>
+        <td>
+          <span 
+            [ngClass]="{
+              'status-applied': app.status === 'APPLIED',
+              'status-withdrawn': app.status === 'WITHDRAWN'
+            }">
+            {{ app.status }}
+          </span>
+        </td>
+        <td>{{ app.appliedAt | date:'medium' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && applications.length === 0" class="empty">
+    No applications yet.
+  </div>
+
+</div>

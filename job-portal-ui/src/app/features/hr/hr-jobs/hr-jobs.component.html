@@ -1,0 +1,55 @@
+<!-- <app-navbar></app-navbar>
+<div *ngIf="activeTab === 'jobs'">
+
+  <div *ngIf="jobs.length === 0" class="empty-state">
+    No jobs posted yet.
+  </div>
+
+  <div class="job-grid">
+    <div class="job-card" *ngFor="let job of jobs">
+
+      <h4>{{ job.title }}</h4>
+      <p>{{ job.location }}</p>
+
+      <div class="job-meta">
+        <span>{{ job.employmentType }}</span>
+        <span>{{ job.experienceLevel }}</span>
+      </div>
+
+      <div class="status"
+           [class.active]="job.active"
+           [class.inactive]="!job.active">
+        {{ job.active ? 'Active' : 'Inactive' }}
+      </div>
+
+    </div>
+  </div>
+
+</div> -->
+
+<div class="hr-section">
+  <h2>Jobs Posted by You</h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading jobs...
+  </div>
+
+  <div *ngIf="!loading && jobs.length === 0" class="empty">
+    No jobs posted yet.
+  </div>
+
+  <div class="job-grid">
+    <div class="job-card" *ngFor="let job of jobs">
+      <h3>Job Id: {{job.id}}</h3>
+      <p>Title: {{ job.title }}</p>
+      <p>Location: {{ job.location }}</p>
+      <p>Employment Type: {{ job.employmentType }}</p>
+
+      <span class="status"
+        [class.active]="job.active"
+        [class.inactive]="!job.active">
+        {{ job.active ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+  </div>
+</div>

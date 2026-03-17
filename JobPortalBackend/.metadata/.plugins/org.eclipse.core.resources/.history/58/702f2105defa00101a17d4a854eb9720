@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+          filters:
+            - PreserveHostHeader
+            - AddRequestHeader=Authorization, #{request.headers.Authorization}
+        - id: job-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/jobs/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

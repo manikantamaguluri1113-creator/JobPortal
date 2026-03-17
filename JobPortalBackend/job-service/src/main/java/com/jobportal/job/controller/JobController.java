@@ -1,0 +1,121 @@
+package com.jobportal.job.controller;
+
+
+import com.jobportal.job.dto.AdminOverviewResponse;
+import com.jobportal.job.dto.HrAnalyticsResponse;
+import com.jobportal.job.entity.Job;
+import com.jobportal.job.entity.JobApplication;
+import com.jobportal.job.service.AdminOverviewService;
+import com.jobportal.job.service.HrAnalyticsService;
+import com.jobportal.job.service.JobApplicationService;
+import com.jobportal.job.service.JobServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/jobs")
+@RequiredArgsConstructor
+public class JobController {
+	
+
+    private final JobServiceImpl jobService;
+    private final HrAnalyticsService hrAnalyticsService;
+    private final AdminOverviewService adminOverviewService;
+    private final JobApplicationService jobApplicationService;
+
+    
+    public JobController(JobServiceImpl jobService, HrAnalyticsService hrAnalyticsService,
+    						AdminOverviewService adminOverviewService, JobApplicationService jobApplicationService) {
+        this.jobService = jobService;
+        this.hrAnalyticsService = hrAnalyticsService;
+        this.adminOverviewService = adminOverviewService;
+		this.jobApplicationService = jobApplicationService;
+    }
+    
+//    @PostMapping
+//    public Job createJob(
+//            @RequestBody Job job,
+//            @RequestHeader("X-User-Id") Long recruiterId
+//    ) {
+//        return jobService.createJob(job, recruiterId);
+//    }
+    
+    @PostMapping("/create")
+    public Job createJob(
+            @RequestBody Job job,
+            Authentication authentication
+    ) {
+        Long recruiterId = Long.parseLong(authentication.getPrincipal().toString());
+        System.out.println("job"+job);
+        return jobService.createJob(job, recruiterId);
+    }
+
+
+    @GetMapping("/getjobs")
+    public List<Job> getAllJobs() {
+        return jobService.getTotalJobs();
+    }
+    
+    @GetMapping("/getactivejobs")
+    public List<Job> getActiveJobs() {
+        return jobService.getAllActiveJobs();
+    }
+    
+    @PutMapping("/{id}")
+    public Job updateJob(
+            @PathVariable Long id,
+            @RequestBody Job updatedJob,
+            Authentication authentication
+    ) {
+    	System.out.println("jobcontroller52");
+        Long userId = Long.parseLong(authentication.getPrincipal().toString());
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        return jobService.updateJob(id, updatedJob, userId, isAdmin);
+    }
+
+
+    @GetMapping("/recruiter")
+    public List<Job> getJobsByRecruiter( Authentication authentication ) 
+    {
+    	Long recruiterId = Long.parseLong(authentication.getPrincipal().toString());
+    	System.out.println("recId" + recruiterId);
+        return jobService.getJobsByRecruiter(recruiterId);
+    }
+    
+    @GetMapping("/recruiter/analytics")
+    public HrAnalyticsResponse getHrAnalytics(Authentication authentication) {
+
+        Long recruiterId = Long.parseLong(authentication.getName());
+
+        return hrAnalyticsService.getHrAnalytics(recruiterId);
+    }
+    
+ 
+    // Applications for a specific job (when admin clicks "View Applications")
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<List<JobApplication>> getByJob(@PathVariable Long jobId) {
+        return ResponseEntity.ok(jobApplicationService.getApplicationsByJob(jobId));
+    }
+    
+    @GetMapping("/admin/overview")
+    public AdminOverviewResponse getAdminOverview(Authentication authentication) {
+
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            throw new RuntimeException("Access denied");
+        }
+
+        return adminOverviewService.getOverview();
+    }
+
+}

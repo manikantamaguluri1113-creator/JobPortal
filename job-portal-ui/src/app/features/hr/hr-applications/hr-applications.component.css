@@ -1,0 +1,45 @@
+.hr-applications-container {
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.loading,
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.applications-table th,
+.applications-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.applications-table th {
+  background-color: #f4f6f9;
+  font-weight: 600;
+}
+
+.status-applied {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.status-withdrawn {
+  color: #dc3545;
+  font-weight: 600;
+}

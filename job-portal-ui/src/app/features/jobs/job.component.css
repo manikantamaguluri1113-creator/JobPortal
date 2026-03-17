@@ -1,0 +1,91 @@
+.content {
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 16px;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.job-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.location {
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.salary {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.status {
+  font-size: 13px;
+  color: #15803d;
+}
+
+.status.inactive {
+  color: #b91c1c;
+}
+
+.info {
+  color: #475569;
+}
+
+.error {
+  color: #b91c1c;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+.admin-actions{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.action-btn{
+  padding:8px 16px;
+  border-radius:6px;
+  border:none;
+  background:#2f6fed;
+  color:white;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.action-btn.secondary{
+  background:#2d8f55;
+}

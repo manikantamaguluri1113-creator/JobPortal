@@ -1,0 +1,26 @@
+package com.jobportal.job.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+
+public class HrAnalyticsResponse {
+
+    // ---------------------------
+    // Job Metrics
+    // ---------------------------
+    private long totalJobs;
+    private long activeJobs;
+    private long inactiveJobs;
+
+    // ---------------------------
+    // Application Metrics
+    // ---------------------------
+    private long totalApplications;
+    private long appliedCount;
+    private long withdrawnCount;
+    
+}

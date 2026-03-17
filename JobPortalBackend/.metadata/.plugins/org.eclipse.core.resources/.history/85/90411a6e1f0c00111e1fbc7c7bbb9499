@@ -1,0 +1,75 @@
+package com.jobportal.job.controller;
+
+import com.jobportal.job.entity.Job;
+import com.jobportal.job.service.JobServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/jobs")
+@RequiredArgsConstructor
+public class JobController {
+	
+
+    private final JobServiceImpl jobService;
+    
+    public JobController(JobServiceImpl jobService) {
+        this.jobService = jobService;
+    }
+    
+//    @PostMapping
+//    public Job createJob(
+//            @RequestBody Job job,
+//            @RequestHeader("X-User-Id") Long recruiterId
+//    ) {
+//        return jobService.createJob(job, recruiterId);
+//    }
+    
+    @PostMapping("/create")
+    public Job createJob(
+            @RequestBody Job job,
+            Authentication authentication
+    ) {
+        Long recruiterId = Long.parseLong(authentication.getPrincipal().toString());
+        System.out.println("job"+job);
+        return jobService.createJob(job, recruiterId);
+    }
+
+
+    @GetMapping("/getjobs")
+    public List<Job> getAllJobs() {
+        return jobService.getTotalJobs();
+    }
+    
+    @GetMapping("/getactivejobs")
+    public List<Job> getActiveJobs() {
+        return jobService.getAllActiveJobs();
+    }
+    
+    @PutMapping("/{id}")
+    public Job updateJob(
+            @PathVariable Long id,
+            @RequestBody Job updatedJob,
+            Authentication authentication
+    ) {
+    	System.out.println("jobcontroller52");
+        Long userId = Long.parseLong(authentication.getPrincipal().toString());
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        return jobService.updateJob(id, updatedJob, userId, isAdmin);
+    }
+
+
+    @GetMapping("/recruiter")
+    public List<Job> getJobsByRecruiter( @RequestBody Authentication authentication ) 
+    {
+    	Long recruiterId = Long.parseLong(authentication.getPrincipal().toString());
+    	System.out.println("recId" + recruiterId);
+        return jobService.getJobsByRecruiter(recruiterId);
+    }
+}

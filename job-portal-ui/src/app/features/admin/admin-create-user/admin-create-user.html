@@ -1,0 +1,32 @@
+<div class="dialog-overlay">
+
+  <div class="dialog">
+
+    <h2>Create User</h2>
+
+    <label>Full Name</label>
+    <input type="text" [(ngModel)]="newUser.name">
+
+    <label>Email</label>
+    <input type="email" [(ngModel)]="newUser.email">
+
+    <label>Password</label>
+    <input type="password" [(ngModel)]="newUser.password">
+
+    <label>Role</label>
+    <select [(ngModel)]="newUser.role">
+      <option value="HR">HR</option>
+      <option value="ADMIN">ADMIN</option>
+    </select>
+
+    <div class="dialog-actions">
+
+      <button (click)="close()">Cancel</button>
+
+      <button (click)="createUser()">Create</button>
+
+    </div>
+
+  </div>
+
+</div>

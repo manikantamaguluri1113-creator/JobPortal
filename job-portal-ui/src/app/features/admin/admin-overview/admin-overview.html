@@ -1,0 +1,27 @@
+<h2 class="title">Admin Overview</h2>
+
+<div *ngIf="loading">Loading...</div>
+
+<div class="kpi-grid" *ngIf="!loading">
+
+  <div class="card">
+    <h3>Total Jobs</h3>
+    <p>{{overview.totalJobs}}</p>
+  </div>
+
+  <div class="card">
+    <h3>Active Jobs</h3>
+    <p>{{overview.activeJobs}}</p>
+  </div>
+
+  <div class="card">
+    <h3>Inactive Jobs</h3>
+    <p>{{overview.inactiveJobs}}</p>
+  </div>
+
+  <div class="card">
+    <h3>Total Applications</h3>
+    <p>{{overview.totalApplications}}</p>
+  </div>
+
+</div>

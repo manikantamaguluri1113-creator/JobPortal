@@ -1,0 +1,32 @@
+<div class="login-container">
+  <h2>Candidate Login</h2>
+
+  <form (ngSubmit)="login()" novalidate>
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="Password"
+      [(ngModel)]="password"
+      name="password"
+      required
+    />
+
+    <button type="submit" [disabled]="loading || !email || !password">
+      {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <p class="register-link">
+      New candidate?
+      <a routerLink="/candidate/register">Register here</a>
+    </p>
+  </form>
+</div>

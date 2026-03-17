@@ -1,0 +1,5 @@
+package com.jobportal.gateway.filter;
+
+public class GatewayLoggingFilter {
+
+}

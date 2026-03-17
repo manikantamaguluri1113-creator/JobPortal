@@ -1,0 +1,124 @@
+.candidate-jobs-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.candidate-jobs-container h2 {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Info & error */
+.info-text {
+  font-size: 16px;
+  color: #555;
+}
+
+.error-text {
+  font-size: 16px;
+  color: #c62828;
+}
+
+/* Grid */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.job-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.job-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.job-location {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.job-description {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+/* Meta info */
+.job-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.job-meta span {
+  background: #f3f3f3;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Salary */
+.job-salary {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* Apply button */
+.apply-btn {
+  margin-top: auto;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #bdbdbd;
+  color: #fff;
+  font-size: 14px;
+  cursor: not-allowed;
+}
+
+.apply-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.applied-btn {
+  background-color: #16a34a;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: not-allowed;
+}
+
+.success-msg {
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}

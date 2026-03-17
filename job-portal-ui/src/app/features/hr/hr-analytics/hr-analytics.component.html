@@ -1,0 +1,33 @@
+<div class="analytics-container">
+
+  <h2>HR Analytics Dashboard</h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading analytics...
+  </div>
+
+  <div *ngIf="!loading && analytics" class="card-grid">
+
+    <div class="analytics-card">
+      <h3>Total Jobs Posted</h3>
+      <p>{{ analytics.totalJobs }}</p>
+    </div>
+
+    <div class="analytics-card">
+      <h3>Total Applications</h3>
+      <p>{{ analytics.totalApplications }}</p>
+    </div>
+
+    <div class="analytics-card">
+      <h3>Applied</h3>
+      <p class="success">{{ analytics.appliedCount }}</p>
+    </div>
+
+    <div class="analytics-card">
+      <h3>Withdrawn</h3>
+      <p class="danger">{{ analytics.withdrawnCount }}</p>
+    </div>
+
+  </div>
+
+</div>

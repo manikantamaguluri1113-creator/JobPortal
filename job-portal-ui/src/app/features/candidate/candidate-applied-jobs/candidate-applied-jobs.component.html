@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+<!-- <div class="container">
+  <h2>Applied Jobs</h2>
+
+  <p *ngIf="loading">Loading...</p>
+
+  <div *ngIf="!loading && applications.length === 0">
+    No applied jobs yet.
+  </div>
+
+  <div class="card" *ngFor="let app of applications">
+    <h3>{{ app.job.id }}</h3>
+    <p>Status: {{ app.status }}</p>
+    <p>Applied At: {{ app.appliedAt | date:'medium' }}</p>
+  </div>
+</div> -->
+
+
+<h2>Applied Jobs</h2>
+<p *ngIf="loading">Loading...</p>
+
+  <div *ngIf="!loading && applications.length === 0">
+    No applied jobs yet.
+  </div>
+<div class="job-container">
+  <div class="job-card" *ngFor="let app of applications">
+
+    <h3>{{ app.job.title }}</h3>
+
+    <p>Location: {{ app.job.location }}</p>
+    <p>Description: {{ app.job.description }}</p>
+    <p>Status: {{ app.status }}</p>
+    <p>Applied At: {{ app.appliedAt | date:'medium' }}</p>
+    <div class="tags">
+      <span>Employment Type: {{ app.job.employmentType }}</span>
+      <br><br>
+      <span>Experience Level: {{ app.job.experienceLevel }}</span>
+    </div>
+
+    <p>
+      ₹{{ app.job.minSalary }} – ₹{{ app.job.maxSalary }}
+    </p>
+
+    <!-- <button class="withdraw-btn">
+      Withdraw
+    </button> -->
+    <p class="withdraw-note" *ngIf="app.status === 'WITHDRAWN'">
+    You can reapply after 6 months.
+  </p>
+    <button
+  class="withdraw-btn"
+  (click)="withdraw(app.job.id)"
+  [disabled]="app.status === 'WITHDRAWN'">
+
+  {{ app.status === 'WITHDRAWN' ? 'Withdrawn' : 'Withdraw' }}
+
+</button>
+
+
+  </div>
+</div>

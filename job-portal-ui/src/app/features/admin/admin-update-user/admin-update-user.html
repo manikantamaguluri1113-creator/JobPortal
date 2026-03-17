@@ -1,0 +1,36 @@
+<div class="dialog-overlay">
+
+<div class="dialog">
+
+<h2>Update User</h2>
+
+<label>Full Name</label>
+<input type="text" [(ngModel)]="user.fullName">
+
+<label>Email</label>
+<input type="email" [(ngModel)]="user.email">
+
+<!-- <label>Role</label>
+<select [(ngModel)]="user.role">
+<option value="ADMIN">ADMIN</option>
+<option value="HR">HR</option>
+<option value="CANDIDATE">CANDIDATE</option>
+</select> -->
+
+<label>Status</label>
+<select [(ngModel)]="user.active">
+<option [ngValue]="true">Active</option>
+<option [ngValue]="false">Inactive</option>
+</select>
+
+<div class="buttons">
+
+<button (click)="close()">Cancel</button>
+
+<button (click)="updateUser()">Update User</button>
+
+</div>
+
+</div>
+
+</div>

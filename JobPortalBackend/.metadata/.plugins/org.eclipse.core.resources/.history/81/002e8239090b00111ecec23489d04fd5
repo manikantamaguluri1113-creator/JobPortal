@@ -1,0 +1,61 @@
+package com.jobportal.job.service;
+
+import com.jobportal.job.entity.Job;
+import com.jobportal.job.repository.JobRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class JobService {
+
+    private final JobRepository jobRepository;
+    
+    public JobService(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
+
+    // Create Job (Recruiter only)
+    public Job createJob(Job job, Long recruiterId) {
+        job.setRecruiterId(recruiterId);
+        return jobRepository.save(job);
+    }
+
+    // Get all active jobs (Public)
+    public List<Job> getAllActiveJobs() {
+        return jobRepository.findByActiveTrue();
+    }
+    
+    public List<Job> getTotalJobs(){
+    	return jobRepository.findAll();
+    }
+    public Job updateJob(Long jobId, Job updatedJob, Long userId, boolean isAdmin) {
+
+        Job existing = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        // HR can update only their jobs
+        if (!isAdmin && !existing.getRecruiterId().equals(userId)) {
+            throw new RuntimeException("Not authorized to update this job");
+        }
+
+        existing.setTitle(updatedJob.getTitle());
+        existing.setDescription(updatedJob.getDescription());
+        existing.setLocation(updatedJob.getLocation());
+        existing.setEmploymentType(updatedJob.getEmploymentType());
+        existing.setExperienceLevel(updatedJob.getExperienceLevel());
+        existing.setMinSalary(updatedJob.getMinSalary());
+        existing.setMaxSalary(updatedJob.getMaxSalary());
+        existing.setActive(updatedJob.isActive());
+
+        return jobRepository.save(existing);
+    }
+
+
+    // Get jobs posted by a recruiter
+    public List<Job> getJobsByRecruiter(Long recruiterId) {
+        return jobRepository.findByRecruiterId(recruiterId);
+    }
+}

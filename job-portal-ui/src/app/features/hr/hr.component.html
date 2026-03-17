@@ -1,0 +1,126 @@
+<app-navbar></app-navbar>
+
+<!-- <div class="content">
+  <h2>HR Dashboard</h2>
+  <p>HR component loaded successfully.</p>
+</div> -->
+
+<!-- <div class="dashboard-container">
+
+  <h2 class="dashboard-title">HR Dashboard</h2>
+
+ 
+  <div class="tabs">
+    <button 
+      [class.active]="activeTab === 'jobs'"
+      (click)="setTab('jobs')">
+      My Jobs
+    </button>
+
+    <button 
+      [class.active]="activeTab === 'applications'"
+      (click)="setTab('applications')">
+      Applications
+    </button>
+
+    <button 
+      [class.active]="activeTab === 'analytics'"
+      (click)="setTab('analytics')">
+      Analytics
+    </button>
+  </div>
+
+  <div class="tab-content">
+
+    <div *ngIf="activeTab === 'jobs'">
+      <h3>My Jobs</h3>
+    </div>
+
+    <div *ngIf="activeTab === 'applications'">
+      <h3>Applications</h3>
+    </div>
+
+    <div *ngIf="activeTab === 'analytics'">
+      <h3>Analytics</h3>
+    </div>
+
+  </div>
+
+</div> -->
+
+
+<!-- <div *ngIf="activeTab === 'jobs'">
+
+  <div *ngIf="jobs.length === 0" class="empty-state">
+    No jobs posted yet.
+  </div>
+
+  <div class="job-grid">
+    <div class="job-card" *ngFor="let job of jobs">
+
+      <h4>{{ job.title }}</h4>
+      <p>{{ job.location }}</p>
+
+      <div class="job-meta">
+        <span>{{ job.employmentType }}</span>
+        <span>{{ job.experienceLevel }}</span>
+      </div>
+
+      <div class="status"
+           [class.active]="job.active"
+           [class.inactive]="!job.active">
+        {{ job.active ? 'Active' : 'Inactive' }}
+      </div>
+
+    </div>
+  </div>
+
+</div> -->
+
+<!-- <div class="hr-dashboard">
+
+  <h2 class="dashboard-title">HR Dashboard</h2>
+
+  <div class="tabs">
+    <a routerLink="jobs" routerLinkActive="active" class="tab">
+      Jobs
+    </a>
+
+    <a routerLink="applications" routerLinkActive="active" class="tab">
+      Applications
+    </a>
+
+    <a routerLink="analytics" routerLinkActive="active" class="tab">
+      Analytics
+    </a>
+  </div>
+
+  <div class="tab-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div> -->
+
+<div class="hr-dashboard">
+
+  <h2 class="dashboard-title">HR Dashboard</h2>
+
+  <div class="tabs">
+    <a routerLink="jobs" routerLinkActive="active" class="tab">
+      Jobs
+    </a>
+
+    <a routerLink="applications" routerLinkActive="active" class="tab">
+      Applications
+    </a>
+
+    <a routerLink="analytics" routerLinkActive="active" class="tab">
+      Analytics
+    </a>
+  </div>
+
+  <div class="tab-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
