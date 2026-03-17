@@ -140,4 +140,4 @@ spring.datasource.password=your_password
 
 **Manikanta Maguluri**
 
-GitHub: https://github.com/manikantamaguluri1113
+GitHub: https://github.com/manikantamaguluri1113-creator
